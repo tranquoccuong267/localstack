@@ -225,6 +225,7 @@ def append_cors_headers(bucket_name, request_method, request_headers, response):
                     response.headers['Access-Control-Allow-Origin'] = origin
                     break
         # add additional headers
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         exposed_headers = rule.get('ExposeHeader', [])
         for header in exposed_headers:
             if header.lower() == 'date':
