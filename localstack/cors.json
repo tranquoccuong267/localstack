@@ -1,0 +1,11 @@
+{
+  "CORSRules": [
+    {
+      // AllowedOrigins have 2 elements thus In python if a array have 1 elements it is considered as a string
+      "AllowedOrigins": ["https://portal-deloitte.kobiton.com",""],
+      "AllowedHeaders": ["*"],
+      "AllowedMethods": ["PUT", "POST", "DELETE","OPTIONS"],
+      "MaxAgeSeconds": 3000
+    }
+  ]
+}

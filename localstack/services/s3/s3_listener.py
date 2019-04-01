@@ -228,8 +228,9 @@ def delete_cors(bucket_name):
 def append_cors_headers(bucket_name, request_method, request_headers, response):
     cors = BUCKET_CORS.get(bucket_name)
     if not cors:
-        return
-    origin = request_headers.get('Origin', '')
+       return
+    # disable this thus request_headers does not contain Origin 
+    # origin = request_headers.get('Origin', '')
     rules = cors['CORSConfiguration']['CORSRule']
     if not isinstance(rules, list):
         rules = [rules]
@@ -239,10 +240,12 @@ def append_cors_headers(bucket_name, request_method, request_headers, response):
         if request_method in allowed_methods:
             allowed_origins = rule.get('AllowedOrigin', [])
             for allowed in allowed_origins:
-                if origin in allowed or re.match(allowed.replace('*', '.*'), origin):
-                    response.headers['Access-Control-Allow-Origin'] = origin
-                    break
+                # Can not get orgin from request_headers so this logic wont work
+                # if origin in allowed or re.match(allowed.replace('*', '.*'), origin):
+                response.headers['Access-Control-Allow-Origin'] = allowed
+                break
         # add additional headers
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         exposed_headers = rule.get('ExposeHeader', [])
         for header in exposed_headers:
             if header.lower() == 'date':
